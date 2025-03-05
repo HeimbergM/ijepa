@@ -408,7 +408,7 @@ class VisionTransformer(nn.Module):
         B, N, D = x.shape
 
         # -- add positional embedding to x
-        pos_embed = self.interpolate_pos_encoding(x, self.pos_embed)
+        pos_embed = self.interpolate_pos_encoding(x)
         x = x + pos_embed
 
         # -- mask x
@@ -424,7 +424,8 @@ class VisionTransformer(nn.Module):
 
         return x
 
-    def interpolate_pos_encoding(self, x, pos_embed):
+    def interpolate_pos_encoding(self, x):
+        pos_embed = self.pos_embed
         npatch = x.shape[1] - 1
         N = pos_embed.shape[1] - 1
         if npatch == N:
